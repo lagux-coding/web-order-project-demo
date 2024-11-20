@@ -3,7 +3,7 @@ import QRCode from 'qrcode';
 
 function QRCodeGenerator({ tableId }) {
   const canvasRef = useRef(null);
-  const value = `http://192.168.100.2:5173/table?id=${tableId}`;
+  const value = `https://weborderlagux.netlify.app/table?id=${tableId}`;
 
   useEffect(() => {
     QRCode.toCanvas(canvasRef.current, value, { width: 256 }, (error) => {
