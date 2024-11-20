@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Đảm bảo rằng toàn bộ ứng dụng sử dụng theme sáng */
+body {
+  background-color: #fdf5e6; /* Màu nền sáng */
+  color: #333333; /* Màu chữ tối */
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif; /* Font chữ */
+}
+
+/* Các thành phần khác */
+input {
+  background-color: #ffffff; /* Nền sáng cho ô nhập */
+  color: #333333; /* Màu chữ tối cho ô nhập */
+}
+
+button {
+  /* background-color: #007bff; Màu nền cho nút */
+  color: #ffffff; /* Màu chữ trắng cho nút */
+}
+
+/* Hiệu ứng hover cho nút */
+button:hover {
+  /* background-color: #0056b3; Màu nền khi hover */
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    width: 100%; /* Đặt chiều rộng navbar thành 100% trên màn hình nhỏ */
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-in-out forwards;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in-out forwards;
+}
+
+@keyframes zoom-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-zoom-in {
+  animation: zoom-in 0.3s ease-in-out forwards;
+}
+
+@keyframes zoom-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-zoom-out {
+  animation: zoom-out 0.3s forwards;
+}
+
+/* styles.css */
+/* styles.css */
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(-5px);
+  }
+  20% {
+    transform: translateY(-10px); /* Nhảy lên */
+  }
+  30% {
+    transform: translateY(-5px); /* Nhảy lên */
+  }
+  40% {
+    transform: translateY(0); /* Trở về vị trí ban đầu */
+  }
+  60% {
+    opacity: 0; /* Biến mất */
+  }
+  100% {
+    opacity: 1; /* Hiện lại */
+  }
+}
+
+.animate-bounce-fade {
+  animation: bounce 0.7s ease forwards; /* Thay đổi thời gian và kiểu hiệu ứng */
+}
+
+/* Thêm CSS cho hiệu ứng fade-out */
+@keyframes fade-out {
+  0% {
+    opacity: 1; /* Bắt đầu với độ mờ 1 */
+    transform: translateY(0); /* Vị trí ban đầu */
+  }
+  100% {
+    opacity: 0; /* Kết thúc với độ mờ 0 */
+    transform: translateY(-10px); /* Dịch chuyển lên trên một chút */
+  }
+}
+
+.fade-out {
+  animation: fade-out 0.5s ease-in-out forwards; /* Thời gian và kiểu hiệu ứng */
+}
+
+
+/* styles.css */
+.button-press {
+  transition: transform 0.1s ease;
+}
+
+.button-press:active {
+  transform: scale(0.9); /* Giảm kích thước xuống 90% khi nhấn */
+}
+
+/* styles.css */
+@keyframes float {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 0.5s ease forwards; /* Hiệu ứng float */
+}
+
+/* styles.css */
+/* styles.css */
+.card {
+  transition: transform 0.2s ease; /* Thời gian chuyển đổi cho hiệu ứng */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Phóng to khi hover */
+}
+
+.card:active {
+  transform: scale(0.95); /* Thu nhỏ khi nhấn */
+}
+
+/* styles.css */
+.tag-button {
+  background-color: white; /* Màu nền trắng */
+  color: black; /* Màu chữ đen */
+  border: 1px solid #007BFF; /* Viền xanh mỏng */
+  padding: 8px 16px; /* Padding cho button */
+  border-radius: 4px; /* Bo góc */
+  cursor: pointer; /* Con trỏ chuột khi hover */
+  transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+}
+
+.tag-button:hover {
+  background-color: #E0F7FA; /* Màu nền xanh nhạt khi hover */
+}
+/* Các quy tắc khác cho các thành phần khác */
+
+.notification-slide {
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.notification-slide.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Thêm CSS cho hiệu ứng slide-down */
+@keyframes slide-down {
+  0% {
+    transform: translateY(-100%); /* Bắt đầu từ vị trí trên cùng */
+    opacity: 0; /* Bắt đầu với độ mờ 0 */
+  }
+  100% {
+    transform: translateY(0); /* Kết thúc ở vị trí ban đầu */
+    opacity: 1; /* Kết thúc với độ mờ 1 */
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.5s ease-in-out forwards; /* Thời gian và kiểu hiệu ứng */
+}
+
+.notification {
+  position: fixed; /* Đặt vị trí cố định */
+  top: 20px; /* Khoảng cách từ trên cùng */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Đẩy sang trái một nửa chiều rộng của nó để căn giữa */
+  z-index: 100; /* Đảm bảo thông báo nằm trên các phần tử khác */
+  transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển tiếp */
+}
