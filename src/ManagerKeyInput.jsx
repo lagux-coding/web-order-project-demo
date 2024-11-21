@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const ManagerKeyInput = () => {
   const [managerKey, setManagerKey] = useState('');
   const navigate = useNavigate();
+  const keyManager = '100104'
   const correctKey = '123123'; // Thay thế bằng key manager thực tế
 
   const handleSubmit = (e) => {
@@ -11,7 +12,10 @@ const ManagerKeyInput = () => {
     if (managerKey === correctKey) {
       localStorage.setItem('managerKey', managerKey); // Lưu key vào localStorage
       navigate('/generate'); // Chuyển hướng đến màn hình tạo QR code
-    } else {
+    } else if(managerKey === keyManager) {
+        navigate('/manager');
+    }
+    else {
       alert('Key manager không đúng!'); // Hiển thị thông báo lỗi
     }
   };

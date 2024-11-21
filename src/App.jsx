@@ -38,6 +38,7 @@ function App() {
     <Router>
       <div>
         <Routes>
+        <Route path="/" element={<ManagerKeyInput />} />
           <Route path="/table" element={<Home messages={messages} sendMessage={sendMessage} />} />
           <Route path="/generate" element={<QRCodeGenerator />} />
           <Route path="/manager-key" element={<ManagerKeyInput />} />
