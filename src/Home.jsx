@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { FaMapMarkerAlt } from 'react-icons/fa'; // Import icon
+import { FaMapMarkerAlt, FaComments } from 'react-icons/fa'; // Import icon
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
 import { Autoplay } from 'swiper/modules'; // Import Autoplay
 import { Rate } from 'antd'; // Import Rate component from Ant Design
+import Chat from './Chat'; // Import the Chat component
 
 const images = [
   'https://d3design.vn/uploads/Summer%20drink%20menu%20promotion%20banner%20template.jpg',
@@ -26,7 +27,7 @@ const noonIcon = 'https://firebasestorage.googleapis.com/v0/b/website-4922d.apps
 const afternoonIcon = 'https://firebasestorage.googleapis.com/v0/b/website-4922d.appspot.com/o/afternoon.png?alt=media&token=be0031b9-25a8-4684-842a-d916706005cc'; // Hình ảnh buổi chiều
 const nightIcon = 'https://firebasestorage.googleapis.com/v0/b/website-4922d.appspot.com/o/cloudy-night.png?alt=media&token=0ac738e1-525d-40af-9fc1-ef015c04f7fb'; // Hình ảnh buổi tối
 
-const Home = () => {
+const Home = ({ messages, sendMessage }) => {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [language, setLanguage] = useState('VIE');
   const location = useLocation();  // Lấy thông tin URL hiện tại
@@ -38,6 +39,9 @@ const Home = () => {
   const [rating, setRating] = useState(0); // State for rating
   const [feedback, setFeedback] = useState(''); // State for feedback input
   const [showRatingPopup, setShowRatingPopup] = useState(false); // State for rating popup visibility
+  const [showMessageInput, setShowMessageInput] = useState(false); // State to manage message input visibility
+  const [message, setMessage] = useState(''); // State to manage the message input
+  const [showChat, setShowChat] = useState(false); // State to manage chat visibility
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -123,6 +127,12 @@ const Home = () => {
     setShowRatingPopup(false); // Close the popup after submission
     setRating(0); // Reset rating
     setFeedback(''); // Reset feedback
+  };
+
+  const handleSendMessage = () => {
+    console.log('Message sent:', message); // Handle sending the message (e.g., send to server)
+    setMessage(''); // Clear the message input
+    setShowMessageInput(false); // Hide the message input after sending
   };
 
   if (loading) return ( // Loading screen
@@ -309,6 +319,19 @@ const Home = () => {
           </div>
         </div>
       )}
+
+      {/* Chat button */}
+      <div className="fixed bottom-4 right-4">
+        <button 
+          className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition"
+          onClick={() => setShowChat(true)} // Open chat
+        >
+          <FaComments size={24} />
+        </button>
+      </div>
+
+      {/* Chat component */}
+      {showChat && <Chat messages={messages} sendMessage={sendMessage} onClose={() => setShowChat(false)} />} {/* Close chat when done */}
 
       {/* Footer */}
       <footer className="p-4 bg-gray-800 text-white text-center">

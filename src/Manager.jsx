@@ -4,8 +4,10 @@ import axios from 'axios'; // Import Axios
 import { useNavigate } from 'react-router-dom'; // Import useNavigate để điều hướng
 import AddTablePopup from './AddTablePopup'; // Import Popup
 import TableStatusPopup from './TableStatusPopup'; // Import Popup để thay đổi trạng thái
+import ChatManager from './ChatManager'; // Import the ChatManager component
+import { FaComments } from 'react-icons/fa';
 
-const Manager = () => {
+const Manager = ({ messages, sendMessage }) => {
   const [tables, setTables] = useState([]); // State để lưu danh sách bàn
   const [loading, setLoading] = useState(true); // State để theo dõi trạng thái loading
   const [error, setError] = useState(null); // State để lưu thông báo lỗi
@@ -13,6 +15,7 @@ const Manager = () => {
   const [isStatusPopupOpen, setIsStatusPopupOpen] = useState(false); // State để theo dõi trạng thái popup thay đổi trạng thái
   const [selectedTable, setSelectedTable] = useState(null); // State để lưu bàn được chọn
   const navigate = useNavigate(); // Khởi tạo useNavigate để điều hướng
+  const [showChatManager, setShowChatManager] = useState(false); // State to manage chat manager visibility
 
   useEffect(() => {
     fetchTables(); // Gọi hàm fetchTables khi component mount
@@ -116,6 +119,18 @@ const Manager = () => {
           onStatusChanged={fetchTables} 
         />
       )}
+      {/* Chat button for manager */}
+      <div className="fixed bottom-4 right-4">
+        <button 
+          className="bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition"
+          onClick={() => setShowChatManager(true)} // Open chat manager
+        >
+          <FaComments size={24} />
+        </button>
+      </div>
+
+      {/* ChatManager component */}
+      {showChatManager && <ChatManager messages={messages} sendMessage={sendMessage} onClose={() => setShowChatManager(false)} />} {/* Close chat when done */}
     </div>
   );
 };

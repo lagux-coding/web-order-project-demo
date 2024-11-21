@@ -223,3 +223,20 @@ button:hover {
   z-index: 100; /* Đảm bảo thông báo nằm trên các phần tử khác */
   transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển tiếp */
 }
+
+/* Add this to your CSS file */
+.message-input {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0; /* Start hidden */
+  transform: translateY(20px); /* Start slightly below */
+}
+
+.message-input.show {
+  opacity: 1; /* Fully visible */
+  transform: translateY(0); /* Move to original position */
+}
+
+.keyboard-open {
+  padding-bottom: 300px; /* Adjust this value based on the keyboard height */
+  transition: padding-bottom 0.3s; /* Smooth transition */
+}
