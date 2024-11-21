@@ -6,6 +6,7 @@ const ChatManager = ({ messages, sendMessage, onClose }) => {
   const [isZoomingOut, setIsZoomingOut] = useState(false); // State for zoom-out animation
   const messagesEndRef = useRef(null); // Create a ref for the end of the messages
   const textareaRef = useRef(null); // Create a ref for the textarea
+  const [unreadCount, setUnreadCount] = useState(0); // State to track unread messages
 
   const handleSendMessage = () => {
     if (message.trim()) {
@@ -29,10 +30,21 @@ const ChatManager = ({ messages, sendMessage, onClose }) => {
     }
   }, [messages]); // Run this effect whenever messages change
 
+  // Update unread count when new messages arrive
+  useEffect(() => {
+    const newMessages = messages.filter(msg => msg.sender !== 'manager'); // Assuming messages from the manager are not unread
+    setUnreadCount(newMessages.length);
+  }, [messages]);
+
   return (
     <div className={`fixed inset-0 flex items-end justify-center bg-black bg-opacity-50`}>
       <div className={`bg-white p-6 rounded shadow-md w-80 ${isZoomingOut ? 'animate-zoom-out' : 'animate-zoom-in'}`}>
-        <h2 className="text-xl font-bold mb-4">Chat với Khách hàng</h2>
+        <h2 className="text-xl font-bold mb-4 flex items-center">
+          Chat với Khách hàng
+          {unreadCount > 0 && (
+            <span className="ml-2 bg-red-500 text-white rounded-full px-2 text-xs">{unreadCount}</span>
+          )}
+        </h2>
         <div className="h-60 overflow-y-auto mb-4">
           {messages.map((msg, index) => (
             <div key={index} className={`mb-2 ${msg.sender === 'manager' ? 'text-right' : 'text-left'}`}>
