@@ -8,7 +8,7 @@ import MenuPage from './MenuPage';
 import ManagerKeyInput from './ManagerKeyInput';
 import { io } from 'socket.io-client';
 
-const socket = io('http://54.255.7.45:5000'); // Connect to the Socket.IO server
+const socket = io('https://weborderlagux.mywire.org:5000'); // Connect to the Socket.IO server
 
 socket.emit('clientInfo', {
   userAgent: navigator.userAgent,
