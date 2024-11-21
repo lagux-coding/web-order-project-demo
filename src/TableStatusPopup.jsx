@@ -7,7 +7,7 @@ const TableStatusPopup = ({ table, onClose, onStatusChanged }) => {
   const handleStatusChange = async (newStatus) => {
     setLoading(true); // Bắt đầu loading
     try {
-      await axios.put(`https://web-order.onrender.com/table/update-status/${table.tableId}`, { status: newStatus }); // Gọi API để cập nhật trạng thái
+      await axios.put(`https://weborderlagux.mywire.org:8444/table/update-status/${table.tableId}`, { status: newStatus }); // Gọi API để cập nhật trạng thái
       onStatusChanged(); // Gọi hàm để tải lại danh sách bàn
       onClose(); // Đóng popup
     } catch (error) {

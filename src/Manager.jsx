@@ -20,7 +20,7 @@ const Manager = () => {
 
   const fetchTables = async () => {
     try {
-      const response = await axios.get('https://web-order.onrender.com/table/get-all'); // Thay thế bằng URL API thực tế
+      const response = await axios.get('https://weborderlagux.mywire.org:8444/table/get-all'); // Thay thế bằng URL API thực tế
       setTables(response.data); // Lưu dữ liệu vào state
     } catch (err) {
       setError(err.message); // Lưu thông báo lỗi vào state

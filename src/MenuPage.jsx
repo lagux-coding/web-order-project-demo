@@ -44,7 +44,7 @@ const MenuPage = () => {
 
     const fetchItems = async () => {
       try {
-        const response = await axios.get('https://web-order.onrender.com/item/get-all'); // Thay x.x bằng địa chỉ IP thực tế
+        const response = await axios.get('https://weborderlagux.mywire.org:8444/item/get-all'); // Thay x.x bằng địa chỉ IP thực tế
         setItems(response.data);
         setHasFetched(true); // Đánh dấu là đã fetch dữ liệu
         setDataFetched(true); // Đánh dấu là đã fetch dữ liệu

@@ -10,7 +10,7 @@ const AddTablePopup = ({ onClose, onTableAdded }) => {
     setLoading(true); // Bắt đầu loading
     try {
       // Gọi API để thêm bàn với path variable
-      await axios.get(`https://web-order.onrender.com/table/create/${tableId}`); // Thay thế bằng URL API thực tế
+      await axios.get(`https://weborderlagux.mywire.org:8444/table/create/${tableId}`); // Thay thế bằng URL API thực tế
       onTableAdded(); // Gọi hàm để tải lại danh sách bàn
       onClose(); // Đóng popup
     } catch (error) {
