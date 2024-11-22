@@ -57,7 +57,7 @@ const AIChat = ({ messages, setMessages, onClose }) => {
       const response = await groq.chat.completions.create({
         model: "mixtral-8x7b-32768",
         messages: [
-          { role: "user", content: `Vui lòng trả lời bằng tiếng Việt: ${userInput}` }
+          { role: "user", content: `${userInput}` }
         ],
       });
       return response.choices[0]?.message?.content;
