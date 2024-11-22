@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { FaMapMarkerAlt, FaComments } from 'react-icons/fa'; // Import icon
+import { FaMapMarkerAlt, FaComments, FaRobot } from 'react-icons/fa'; // Import icon
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
 import { Autoplay } from 'swiper/modules'; // Import Autoplay
 import { Rate } from 'antd'; // Import Rate component from Ant Design
 import Chat from './Chat'; // Import the Chat component
+import AIChat from './AIChat'; // Import the AIChat component
 
 const images = [
   'https://d3design.vn/uploads/Summer%20drink%20menu%20promotion%20banner%20template.jpg',
@@ -27,7 +28,7 @@ const noonIcon = 'https://firebasestorage.googleapis.com/v0/b/website-4922d.apps
 const afternoonIcon = 'https://firebasestorage.googleapis.com/v0/b/website-4922d.appspot.com/o/afternoon.png?alt=media&token=be0031b9-25a8-4684-842a-d916706005cc'; // Hình ảnh buổi chiều
 const nightIcon = 'https://firebasestorage.googleapis.com/v0/b/website-4922d.appspot.com/o/cloudy-night.png?alt=media&token=0ac738e1-525d-40af-9fc1-ef015c04f7fb'; // Hình ảnh buổi tối
 
-const Home = ({ messages, sendMessage }) => {
+const Home = ({ messages, sendMessage, sendMessageToAI }) => {
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [language, setLanguage] = useState('VIE');
   const location = useLocation();  // Lấy thông tin URL hiện tại
@@ -42,6 +43,8 @@ const Home = ({ messages, sendMessage }) => {
   const [showMessageInput, setShowMessageInput] = useState(false); // State to manage message input visibility
   const [message, setMessage] = useState(''); // State to manage the message input
   const [showChat, setShowChat] = useState(false); // State to manage chat visibility
+  const [showAIChat, setShowAIChat] = useState(false); // State to manage AI chat visibility
+  const [messageAI, setMessageAI] = useState([]); // Định nghĩa state cho messageAI
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -75,6 +78,7 @@ const Home = ({ messages, sendMessage }) => {
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return language === 'VIE' ? 'Chào buổi sáng' : 'Good morning';
+    if (hour >= 12 && hour < 18) return language === 'VIE' ? 'Chào buổi trưa' : 'Good afternoon';
     if (hour < 18) return language === 'VIE' ? 'Chào buổi chiều' : 'Good afternoon';
     return language === 'VIE' ? 'Chào buổi tối' : 'Good evening';
   };
@@ -230,7 +234,7 @@ const Home = ({ messages, sendMessage }) => {
         {/* Card Liên hệ với chúng tôi */}
         <div className="mt-4 bg-white shadow-md rounded-lg p-4 flex flex-col items-center cursor-pointer transform transition-transform duration-200 hover:scale-105 hover:shadow-lg active:scale-95">
           <h3 className="text-xl font-semibold">{language === 'VIE' ? 'Liên hệ với chúng tôi' : 'Contact Us'}</h3>
-          <p className="text-gray-600">{language === 'VIE' ? 'Điện thoại: 0913 895 657' : 'Phone: 0913 895 657'}</p>
+          <p className="text-gray-600">{language === 'VIE' ? 'Điện thoại: 0927 132 657' : 'Phone: 0912 321 845'}</p>
           <p className="text-gray-600">{language === 'VIE' ? 'Email: contact@okquan.com' : 'Email: contact@okquan.com'}</p>
         </div>      
 
@@ -320,7 +324,17 @@ const Home = ({ messages, sendMessage }) => {
         </div>
       )}
 
-      {/* Chat button */}
+      {/* Biểu tượng AI chat box */}
+      <div className="fixed bottom-20 right-4">
+        <button 
+          className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition"
+          onClick={() => setShowAIChat(true)} // Mở chat AI
+        >
+          <FaRobot size={24} />
+        </button>
+      </div>
+
+      {/* Biểu tượng chat */}
       <div className="fixed bottom-4 right-4">
         <button 
           className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition"
@@ -331,11 +345,14 @@ const Home = ({ messages, sendMessage }) => {
       </div>
 
       {/* Chat component */}
-      {showChat && <Chat messages={messages} sendMessage={sendMessage} onClose={() => setShowChat(false)} />} {/* Close chat when done */}
+      {showChat && <Chat messages={messages} sendMessage={sendMessage} onClose={() => setShowChat(false)} />}
+      
+      {/* AI Chat component */}
+      {showAIChat && <AIChat messages={messageAI} setMessages={setMessageAI} onClose={() => setShowAIChat(false)} />}
 
       {/* Footer */}
       <footer className="p-4 bg-gray-800 text-white text-center">
-        <p>&copy; 2023 Tên quán. Tất cả quyền được bảo lưu.</p>
+        <p>&copy; 2024 Tên quán. Tất cả quyền được bảo lưu.</p>
       </footer>
     </div>
   );

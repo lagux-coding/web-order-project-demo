@@ -199,15 +199,30 @@ button:hover {
   opacity: 1;
 }
 
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-in-out forwards;
+}
+
 /* Thêm CSS cho hiệu ứng slide-down */
 @keyframes slide-down {
   0% {
-    transform: translateY(-100%); /* Bắt đầu từ vị trí trên cùng */
-    opacity: 0; /* Bắt đầu với độ mờ 0 */
+    transform: translateY(0); /* Bắt đầu từ vị trí trên cùng */
+    opacity: 1; /* Bắt đầu với độ mờ 0 */
   }
   100% {
-    transform: translateY(0); /* Kết thúc ở vị trí ban đầu */
-    opacity: 1; /* Kết thúc với độ mờ 1 */
+    transform: translateY(100%); /* Kết thúc ở vị trí ban đầu */
+    opacity: 0; /* Kết thúc với độ mờ 1 */
   }
 }
 
@@ -239,4 +254,38 @@ button:hover {
 .keyboard-open {
   padding-bottom: 300px; /* Adjust this value based on the keyboard height */
   transition: padding-bottom 0.3s; /* Smooth transition */
+}
+
+.dot {
+  font-size: 36px; /* Tăng kích thước lớn hơn cho các chấm */
+  margin: 0 1px; /* Khoảng cách giữa các chấm */
+  animation: bounce 0.8s infinite; /* Thời gian nhảy */
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Độ cao nhảy */
+  }
+}
+
+/* Thêm độ trễ cho từng chấm */
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+/* Thêm vào tệp CSS của bạn */
+.message-container {
+  max-width: 100%; /* Đảm bảo không vượt quá chiều rộng của khung */
+  word-wrap: break-word; /* Ngắt từ nếu cần */
+}
+
+.textarea {
+  overflow-y: auto; /* Cho phép cuộn dọc nếu nội dung vượt quá chiều cao */
+  resize: none; /* Ngăn người dùng thay đổi kích thước ô nhập */
 }

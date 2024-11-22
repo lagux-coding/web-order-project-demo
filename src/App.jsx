@@ -17,6 +17,7 @@ socket.emit('clientInfo', {
 
 function App() {
   const [messages, setMessages] = useState([]);
+  const [messageAI, setMessageAI] = useState([]);
 
   useEffect(() => {
     socket.on('receiveMessage', (message) => {
@@ -34,12 +35,19 @@ function App() {
     // Do not add the message to local state here for the sender
   };
 
+  const sendMessageToAI = (message) => {
+    // Logic để xử lý tin nhắn AI, có thể gọi API hoặc cập nhật trạng thái
+    const msg = { text: message, sender: 'user' };
+    // Gọi API hoặc cập nhật trạng thái ở đây
+    // Ví dụ: setMessages((prevMessages) => [...prevMessages, msg]);
+  };
+
   return (
     <Router>
       <div>
         <Routes>
         <Route path="/" element={<ManagerKeyInput />} />
-          <Route path="/table" element={<Home messages={messages} sendMessage={sendMessage} />} />
+          <Route path="/table" element={<Home messages={messages} sendMessage={sendMessage} messageAI={messageAI} sendMessageToAI={sendMessageToAI} />} />
           <Route path="/generate" element={<QRCodeGenerator />} />
           <Route path="/manager-key" element={<ManagerKeyInput />} />
           <Route path="/manager/*" element={<Manager messages={messages} sendMessage={sendMessage} />} />

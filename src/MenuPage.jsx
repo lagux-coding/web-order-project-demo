@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
-import { HomeIcon } from '@heroicons/react/24/solid'; // Sử dụng Heroicons v2
+import { HomeIcon, XMarkIcon } from '@heroicons/react/24/solid'; // Sử dụng Heroicons v2
 
 const MenuPage = () => {
   const location = useLocation(); // Lấy thông tin URL hiện tại
@@ -17,6 +17,7 @@ const MenuPage = () => {
   const [searchTerm, setSearchTerm] = useState(''); // State để lưu giá trị tìm kiếm
   const [isLoading, setIsLoading] = useState(false); // Trạng thi loading
   const [isClosing, setIsClosing] = useState(false);
+  const [isClosingDetail, setIsClosingDetail] = useState(false);
   const [hasFetched, setHasFetched] = useState(false); // Thêm state để theo dõi việc đã fetch dữ liệu
   const [removingItemId, setRemovingItemId] = useState(null); // Thêm state để theo dõi sản phẩm đang bị xóa
   const [editingItemId, setEditingItemId] = useState(null); // Thêm state để theo dõi sản phẩm đang được chỉnh sửa
@@ -177,21 +178,22 @@ const MenuPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex-grow p-4">
-        <div className="flex items-center mb-4">
+      <div className="flex-grow p-4 relative">
+        <div className="fixed top-0 left-0 right-0 bg-none shadow-none z-10 m-2 flex items-center rounded-2xl">
           <Link to={`/table?id=${tableId}`} className="flex items-center">
-            <HomeIcon className="h-6 w-6 text-orange-400 mr-2" /> {/* Biểu tượng ngôi nhà */}
+            <HomeIcon className="h-9 w-9 text-orange-400 mr-2" /> {/* Biểu tượng ngôi nhà */}
           </Link>
           <input 
             type="text" 
             placeholder="Tìm kiếm món ở đây..." 
-            className="border rounded-lg p-2 flex-grow" 
+            className="border-2 border-gray-500 p-2 bg-orange-100 rounded-lg p-2 flex-grow text-black" 
             value={searchTerm} // Gán giá trị tìm kiếm
             onChange={(e) => setSearchTerm(e.target.value)} // Cập nhật giá trị tìm kiếm
           />
         </div>
 
     {/* Thêm tag cho các loại item */}
+    <div className="pt-16">
     <div className="mb-4 flex flex-wrap">
         <button onClick={() => handleShowItemType('ALL')} className="tag-button min-w-[100px] h-10 mx-2 my-1 rounded-full">Tất cả</button>
         <button onClick={() => handleShowItemType('MILK_TEA')} className="tag-button min-w-[100px] h-10 mx-2 my-1 rounded-full">Trà sữa</button>
@@ -202,6 +204,7 @@ const MenuPage = () => {
         <button onClick={() => handleShowItemType('COFFEE')} className="tag-button min-w-[100px] h-10 mx-2 my-1 rounded-full">Coffee</button>
         <button onClick={() => handleShowItemType('TEA')} className="tag-button min-w-[100px] h-10 mx-2 my-1 rounded-full">Trà</button>
         <button onClick={() => handleShowItemType('OTHER')} className="tag-button min-w-[100px] h-10 mx-2 my-1 rounded-full">Khác</button>
+    </div>
     </div>
 
         {/* Hiển thị các item dựa trên loại hiện tại */}
@@ -263,8 +266,22 @@ const MenuPage = () => {
       {/* Chi tiết giỏ hàng với animation */}
       {showCartDetails && (
         <div className={`fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-300 ease-in-out`}>
-          <div className={`bg-white p-4 rounded-lg shadow-lg max-w-lg w-full h-3/4 flex flex-col transform transition-transform duration-500 ease-in-out max-w-md mx-4 animate-slide-up`} style={{ transform: showCartDetails ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0)' }}>
-            <h2 className="text-lg font-bold mb-2">Chi tiết giỏ hàng</h2>
+          <div className={`bg-white p-4 rounded-lg shadow-lg max-w-lg w-full h-3/4 flex flex-col transform transition-transform duration-500 ease-in-out ${isClosingDetail ? 'animate-slide-down' : 'animate-slide-up'}`} style={{ transform: showCartDetails ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0)' }}>
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-bold mb-2">Chi tiết giỏ hàng</h2>
+              <button 
+                className="text-red-500" 
+                onClick={() => {
+                  setIsClosingDetail(true); // Kích hoạt hiệu ứng đóng
+                  setTimeout(() => {
+                    setShowCartDetails(false);
+                    setIsClosingDetail(false);
+                  }, 300);
+                }} // Đóng chi tiết giỏ hàng
+              >
+                <XMarkIcon className="h-6 w-6" /> {/* Biểu tượng "X" để đóng */}
+              </button>
+            </div>
             <div className="flex-grow overflow-y-auto"> {/* Phần cuộn cho nội dung giỏ hàng */}
               {Object.keys(cart).length === 0 ? (
                 <p>Giỏ hàng trống</p>
@@ -328,13 +345,19 @@ const MenuPage = () => {
               <div className="flex space-x-2">
                 <button 
                   className="bg-red-500 text-white px-6 py-2 rounded-full" 
-                  onClick={() => setShowCartDetails(false)} // Đóng giỏ hàng
+                  onClick={() => {
+                    setIsClosingDetail(true); // Kích hoạt hiệu ứng đóng
+                    setTimeout(() => {
+                      setShowCartDetails(false);
+                      setIsClosingDetail(false);
+                    }, 300);
+                  }} // Đóng giỏ hàng
                 >
                   Đóng
                 </button>
                 <button 
                   className="bg-blue-500 text-white px-6 py-2 rounded-full" 
-                  onClick={handleOrder} // Gi hàm xử lý đặt hàng
+                  onClick={handleOrder} // Gọi hàm xử lý đặt hàng
                 >
                   Order
                 </button>
