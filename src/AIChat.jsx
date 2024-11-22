@@ -1,9 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
 import Anthropic from '@anthropic-ai/sdk';
+import Groq from "groq-sdk";
+
+const groq = new Groq({ 
+  apiKey: "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",
+  dangerouslyAllowBrowser: true,
+});
 
 const anthropic = new Anthropic({
-  apiKey: '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',
+  apiKey: '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',
   dangerouslyAllowBrowser: true,
 });
 
@@ -48,15 +54,13 @@ const AIChat = ({ messages, setMessages, onClose }) => {
 
   const fetchSuggestion = async (userInput) => {
     try {
-      const response = await anthropic.messages.create({
-        model: "claude-3-5-sonnet-20241022",
-        max_tokens: 1024,
+      const response = await groq.chat.completions.create({
+        model: "mixtral-8x7b-32768",
         messages: [
           { role: "user", content: `Vui lòng trả lời bằng tiếng Việt: ${userInput}` }
         ],
       });
-      console.log(response);
-      return response.content[0].text;
+      return response.choices[0]?.message?.content;
     } catch (error) {
       console.error('Error in fetchSuggestion:', error);
       throw error;
